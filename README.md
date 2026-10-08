@@ -1,32 +1,114 @@
-Music Recommendation App 🎵
+# 🎵 Music Recommendation App
 
-A simple music recommendation system built using Python. The application recommends songs that are similar to a selected song based on the similarity of their lyrics.
+A simple **Music Recommendation System** built using Python and Streamlit.
 
-The project uses TF-IDF Vectorization to convert song lyrics into numerical features and Cosine Similarity to find songs with similar lyrics. A Streamlit interface is used to select a song and display the recommendations.
+This project recommends songs that are similar to a song selected by the user. The recommendation is based on the **lyrics of the songs** using **TF-IDF** and **Cosine Similarity**.
 
-Technologies Used
-Python
-Pandas
-NLTK
-Scikit-learn
-Joblib
-Streamlit
-How It Works
+## Features
 
-The project works in the following steps:
+* Select a song from the available songs.
+* Find songs with similar lyrics.
+* Display the top 5 recommended songs.
+* Simple web interface using Streamlit.
 
-The song dataset is loaded using Pandas.
-A sample of 10,000 songs is used for the application.
-Song lyrics are cleaned by:
-Removing special characters
-Converting text to lowercase
-Tokenizing the text
-Removing English stopwords
-TF-IDF is used to convert the cleaned lyrics into numerical vectors.
-Cosine Similarity is calculated between the songs.
-When a user selects a song, the system finds the most similar songs.
-The top 5 similar songs are displayed using Streamlit.
-Project Structure
+## Technologies Used
+
+* **Python**
+* **Pandas** – for handling the dataset
+* **NLTK** – for text preprocessing
+* **Scikit-learn** – for TF-IDF and Cosine Similarity
+* **Joblib** – for saving and loading processed data
+* **Streamlit** – for the web interface
+
+## How the Project Works
+
+The project has three main Python files.
+
+### 1. `preprocess.py`
+
+This file prepares the song data.
+
+It:
+
+* Loads the CSV dataset.
+* Takes a sample of 10,000 songs.
+* Removes unnecessary columns.
+* Cleans the song lyrics.
+* Converts the lyrics to lowercase.
+* Removes special characters.
+* Tokenizes the text.
+* Removes English stopwords.
+* Converts the cleaned lyrics into TF-IDF vectors.
+* Calculates Cosine Similarity between the songs.
+* Saves the processed data as `.pkl` files.
+
+### 2. `recommend.py`
+
+This file contains the recommendation logic.
+
+It:
+
+* Loads the processed data.
+* Finds the song selected by the user.
+* Gets the similarity scores for that song.
+* Sorts the songs based on similarity.
+* Removes the selected song from the results.
+* Selects the top 5 similar songs.
+* Returns the artist and song names.
+
+### 3. `main.py`
+
+This file creates the Streamlit application.
+
+It:
+
+* Loads the available songs.
+* Displays a dropdown for selecting a song.
+* Takes the selected song from the user.
+* Calls the recommendation function.
+* Displays the top 5 recommended songs.
+
+## Recommendation Process
+
+```text
+Song Dataset
+     ↓
+Text Cleaning
+     ↓
+TF-IDF Vectorization
+     ↓
+Cosine Similarity
+     ↓
+Select a Song
+     ↓
+Find Similar Songs
+     ↓
+Top 5 Recommendations
+```
+
+## TF-IDF
+
+**TF-IDF (Term Frequency-Inverse Document Frequency)** converts the song lyrics into numerical vectors.
+
+It gives more importance to words that are useful for distinguishing one song from another.
+
+## Cosine Similarity
+
+**Cosine Similarity** measures how similar two song lyric vectors are.
+
+A higher similarity score means that the lyrics are more similar.
+
+The system uses these similarity scores to find the songs closest to the selected song.
+
+## Dataset
+
+The project uses the `spotify_millsongdata.csv` dataset.
+
+During preprocessing, **10,000 songs are sampled** from the dataset to build the recommendation system.
+
+## Project Structure
+
+```text
 Music_Recommendation_App/
 │
 ├── src/
@@ -38,92 +120,99 @@ Music_Recommendation_App/
 ├── requirements.txt
 ├── .gitignore
 └── README.md
-Files
-preprocess.py
+```
 
-This file handles the preprocessing part of the project.
+The preprocessing script also creates these files locally:
 
-It:
+```text
+df_cleaned.pkl
+tfidf_matrix.pkl
+cosine_sim.pkl
+```
 
-Loads the dataset
-Cleans the lyrics
-Removes stopwords
-Creates TF-IDF vectors
-Calculates cosine similarity
-Saves the processed data using Joblib
-recommend.py
+These files are excluded from GitHub using `.gitignore`.
 
-This file contains the recommendation logic.
+## Installation
 
-It:
+### 1. Clone the Repository
 
-Loads the processed data
-Finds the selected song
-Gets its similarity scores
-Sorts the scores
-Returns the top 5 similar songs
-main.py
-
-This file creates the Streamlit interface.
-
-The user can:
-
-Select a song from the dropdown
-Click the recommendation button
-View the recommended songs and artists
-Setup
-
-Clone the repository:
-
+```bash
 git clone https://github.com/Nikhil-2026/Music_Recommendation_App.git
+```
 
-Go into the project folder:
+### 2. Open the Project
 
+```bash
 cd Music_Recommendation_App
+```
 
-Create a virtual environment:
+### 3. Create a Virtual Environment
 
+```bash
 python -m venv venv
+```
 
-Activate the virtual environment on Windows:
+### 4. Activate the Virtual Environment
 
+For Windows:
+
+```powershell
 .\venv\Scripts\activate
+```
 
-Install the required packages:
+### 5. Install Required Packages
 
+```bash
 pip install -r requirements.txt
-Run the Project
+```
 
-Go to the src folder:
+## Running the Project
 
+Go to the `src` folder:
+
+```bash
 cd src
+```
 
-Run the preprocessing script:
+First run the preprocessing:
 
+```bash
 python preprocess.py
+```
 
-This generates the required processed files locally.
+This creates the required `.pkl` files.
 
-Then run the Streamlit application:
+Then start the Streamlit application:
 
+```bash
 streamlit run main.py
+```
 
 The application will open in the browser.
 
-Recommendation Method
+## Example
 
-The recommendation is based on lyrics similarity.
+After opening the application:
 
-For example, if a user selects a particular song, the system compares its TF-IDF representation with the representations of other songs and returns the songs with the highest cosine similarity.
+1. Select a song from the dropdown.
+2. Click **Recommend Similar Songs**.
+3. The application displays the top 5 similar songs along with their artists.
 
-This means the recommendations are based on the text of the lyrics, not on the user's listening history or personal preferences.
+## Important Note
 
-Dataset
+The recommendations are based on **lyrics similarity**.
 
-The project uses the spotify_millsongdata.csv dataset.
+This project does not use:
 
-For this project, 10,000 songs are sampled from the dataset during preprocessing.
+* User listening history
+* User ratings
+* Personal playlists
+* Spotify account data
 
-Note
+The recommendations are generated only from the song lyrics available in the dataset.
 
-The generated .pkl files are not included in the repository because they are excluded through .gitignore. They are generated when preprocess.py is executed.
+## Author
+
+**Nikhil G.**
+
+GitHub: https://github.com/Nikhil-2026
